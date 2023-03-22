@@ -43,7 +43,7 @@ nhis18_female <- readRDS(file.path(data, "nhis18_female.rds"))
 
 # Data Preparation ------------------------------------------------------------------------------------------------------------------
 CMed_race3_prep(nhis18_female) %>% saveRDS(paste0(output, "expandedData_fem.rds"))
-CMed_race3_prep(nhis18_male)   %>% saveRDS(paste0(output, "expandedData_male.rds"))
+CMed_race3_prep(nhis18_male) %>% saveRDS(paste0(output, "expandedData_male.rds"))
 
 
 # Run Analyses, WOMEN ----------------------------------------------------------------------------------------------------------------
