@@ -16,8 +16,8 @@ CMed_race3_prep <- function(data) {
       M2.smk = factor(smk),
       M3.bmi = factor(bmi_cat),
       M4.phy = factor(phy_act3)) %>%
-    dplyr::select(A.race, M1.alc, M2.smk, M3.bmi, M4.phy, allcause_death, bl_age, end_age, married2, srvy_yr) %>%
-    filter(complete.cases(A.race, M1.alc, M2.smk, M3.bmi, M4.phy, allcause_death, bl_age, end_age, married2, srvy_yr))
+    dplyr::select(A.race, M1.alc, M2.smk, M3.bmi, M4.phy, allcause_death, bl_age, end_age, married.factor, srvy_yr) %>%
+    filter(complete.cases(A.race, M1.alc, M2.smk, M3.bmi, M4.phy, allcause_death, bl_age, end_age, married.factor, srvy_yr))
   
   cat("Step 0 complete (Select data)", "\n") # progress indicator
   
@@ -32,10 +32,10 @@ CMed_race3_prep <- function(data) {
   # Fit model for each mediator, conditioning on exposure (race) and all confounders
   
   mydata$ATemp <- mydata$A.race # first, create and use a copy of the exposure variable (for technical reasons related to R)
-  fitM1 <- vglm(M1.alc ~ ATemp + bl_age + married2 + srvy_yr, data = mydata, family=multinomial(refLevel = 3))
-  fitM2 <- vglm(M2.smk ~ ATemp + bl_age + married2 + srvy_yr, data = mydata, family=multinomial(refLevel = 1))
-  fitM3 <- vglm(M3.bmi ~ ATemp + bl_age + married2 + srvy_yr, data = mydata, family=multinomial(refLevel = 2))
-  fitM4 <- vglm(M4.phy ~ ATemp + bl_age + married2 + srvy_yr, data = mydata, family=multinomial(refLevel = 3))
+  fitM1 <- vglm(M1.alc ~ ATemp + bl_age + married.factor + srvy_yr, data = mydata, family=multinomial(refLevel = 3))
+  fitM2 <- vglm(M2.smk ~ ATemp + bl_age + married.factor + srvy_yr, data = mydata, family=multinomial(refLevel = 1))
+  fitM3 <- vglm(M3.bmi ~ ATemp + bl_age + married.factor + srvy_yr, data = mydata, family=multinomial(refLevel = 2))
+  fitM4 <- vglm(M4.phy ~ ATemp + bl_age + married.factor + srvy_yr, data = mydata, family=multinomial(refLevel = 3))
   
   cat("Step 1 complete (fit model for each mediator)", "\n")  # progress indicator
   
@@ -141,8 +141,8 @@ CMed_race3_prep <- function(data) {
   cat("Step 3 complete (final data complete)", "\n")  # progress indicator
   
   newMyData <- newMyData %>%
-    dplyr::select(ID, bl_age, end_age, allcause_death, A.race, race_M1.alc, race_M2.smk, race_M3.bmi, race_M4.phy, married2, srvy_yr, weightM) %>%
-    filter(complete.cases(ID, bl_age, end_age, allcause_death, A.race, race_M1.alc, race_M2.smk, race_M3.bmi, race_M4.phy, married2, srvy_yr, weightM))
+    dplyr::select(ID, bl_age, end_age, allcause_death, A.race, race_M1.alc, race_M2.smk, race_M3.bmi, race_M4.phy, married.factor, srvy_yr, weightM) %>%
+    filter(complete.cases(ID, bl_age, end_age, allcause_death, A.race, race_M1.alc, race_M2.smk, race_M3.bmi, race_M4.phy, married.factor, srvy_yr, weightM))
   
   return(newMyData)
 }

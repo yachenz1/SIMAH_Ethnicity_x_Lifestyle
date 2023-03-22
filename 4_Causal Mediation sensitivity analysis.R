@@ -51,7 +51,7 @@ CMed_race3_prep(nhis18_male)   %>% saveRDS(paste0(output, "expandedData_male.rds
 # Load data
 expandedData <- readRDS(file.path(output, "expandedData_fem.rds")) %>%
   filter(complete.cases(ID, bl_age, end_age, allcause_death, A.race, race_M1.alc, race_M2.smk, race_M3.bmi, race_M4.phy,
-                        married2, srvy_yr, weightM))
+                        married.factor, srvy_yr, weightM))
 
 hist(expandedData$weightM)
 
@@ -60,7 +60,7 @@ CMed_f <- aalen(Surv(bl_age, end_age, allcause_death) ~ const(A.race) * const(ra
                                                         const(A.race) * const(race_M2.smk) +
                                                         const(A.race) * const(race_M3.bmi) +
                                                         const(A.race) * const(race_M4.phy) +
-                                                        const(married2) + const(srvy_yr),  # adjust for survey year as continuous variable 
+                                                        const(married.factor) + const(srvy_yr),  # adjust for survey year as continuous variable 
                           data=expandedData, weights=expandedData$weightM, clusters=expandedData$ID, robust=0)  
                 
 saveRDS(CMed_f, file.path(output, "CMed_f.rds")) # Save model results      
@@ -100,7 +100,7 @@ CMed_m <- aalen(Surv(bl_age, end_age, allcause_death) ~ const(A.race) * const(ra
                                                         const(A.race) * const(race_M2.smk) +
                                                         const(A.race) * const(race_M3.bmi) +
                                                         const(A.race) * const(race_M4.phy) +
-                                                        const(married2) + const(srvy_yr),  
+                                                        const(married.factor) + const(srvy_yr),  
                           data=expandedData, weights=expandedData$weightM, clusters=expandedData$ID, robust=0)
 
 saveRDS(CMed_m, file.path(output, "CMed_m.rds"))  # Save model results     
