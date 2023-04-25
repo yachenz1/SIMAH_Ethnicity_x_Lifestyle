@@ -24,8 +24,8 @@ output  <- "~/Dropbox/Mac/Desktop/Public Health Institute/Alcohol Research Group
 # Load data (participants aged 25-85 years)
 nhis_all    <- readRDS (paste0(data, "nhis_all18_85.rds"))
 nhis18_85   <- readRDS (paste0(data, "nhis18_85.rds"))
-nhis18_male   <- filter(nhis, female==0)
-nhis18_female <- filter(nhis, female==1)
+nhis18_male   <- filter(nhis_all, female==0)
+nhis18_female <- filter(nhis_all, female==1)
 
 
 # DESCRIPTIVE STATISTICS 
